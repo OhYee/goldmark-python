@@ -37,6 +37,31 @@ func Test_default(t *testing.T) {
 	}
 }
 
+func Test_error(t *testing.T) {
+	var buf bytes.Buffer
+	source := []byte("```python\nprint(\"Hello \n```\n")
+
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			extension.GFM,
+			Default,
+		),
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
+		goldmark.WithRendererOptions(),
+	)
+	if err := md.Convert(source, &buf); err != nil {
+		t.Error(err)
+	}
+	if !strings.Contains(buf.String(), "Error") {
+		t.Errorf("got %s\n", buf.Bytes())
+	}
+	if !strings.Contains(buf.String(), "goldmark-python-error") {
+		t.Errorf("got %s\n", buf.Bytes())
+	}
+}
+
 func Test_demo(t *testing.T) {
 	_, file, _, _ := runtime.Caller(0)
 	goPath, err := exec.LookPath("go")

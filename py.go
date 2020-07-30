@@ -65,7 +65,10 @@ func (d *Python) Renderer(w util.BufWriter, source []byte, node ast.Node, enteri
 			} else {
 				res, err := runPython(raw, d.PythonPath)
 				if err != nil {
-					res = []byte(err.Error())
+					buf := bytes.NewBufferString("<p class=\"goldmark-python-error\">")
+					buf.Write(res)
+					buf.WriteString("</p>")
+					res = buf.Bytes()
 				}
 				if len(d.buf) >= d.MaxLength {
 					d.buf = make(map[string][]byte)
