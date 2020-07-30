@@ -74,7 +74,7 @@ func Test_demo(t *testing.T) {
 		t.Error(err)
 		t.FailNow()
 	} else {
-		if c := strings.Count(string(data), "svg"); c != 6 {
+		if c := strings.Count(string(data), "svg"); c != 7 {
 			t.Errorf("Find %d svg", c)
 			t.FailNow()
 		}
