@@ -11,6 +11,7 @@ jobs:
     - uses: actions/setup-go@v1
       with:
         go-version: 1.13
-    - run: sudo apt-get install graphviz
+    - run: sudo apt-get install python3
+    - run: sudo python3 -m pip install matplotlib
     - run: bash test
     - run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
