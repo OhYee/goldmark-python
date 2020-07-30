@@ -13,3 +13,5 @@
 
 coverage.txt
 .pytest_cache
+
+output.html
