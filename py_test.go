@@ -62,6 +62,34 @@ func Test_error(t *testing.T) {
 	}
 }
 
+func Test_history(t *testing.T) {
+	var buf bytes.Buffer
+	source := []byte("```python\nimport random\nprint(random.random())\n```\n")
+
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			extension.GFM,
+			Default,
+		),
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
+		goldmark.WithRendererOptions(),
+	)
+	if err := md.Convert(source, &buf); err != nil {
+		t.Error(err)
+	}
+	res := buf.String()
+	buf.Reset()
+	if err := md.Convert(source, &buf); err != nil {
+		t.Error(err)
+	}
+	res2 := buf.String()
+	if res != res2 {
+		t.Errorf("Excepted (%s) = (%s)", res, res2)
+	}
+}
+
 func Test_demo(t *testing.T) {
 	_, file, _, _ := runtime.Caller(0)
 	goPath, err := exec.LookPath("go")
