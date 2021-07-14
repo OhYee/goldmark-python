@@ -31,7 +31,7 @@ func main() {
 	}
 
 	_, file, _, _ := runtime.Caller(0)
-	if err := ioutil.WriteFile(path.Join(path.Dir(file), "output.html"), buf.Bytes(), 777); err != nil {
+	if err := ioutil.WriteFile(path.Join(path.Dir(file), "output.html"), buf.Bytes(), 0777); err != nil {
 		panic(err.Error())
 	}
 }

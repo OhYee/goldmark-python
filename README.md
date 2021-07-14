@@ -7,6 +7,8 @@ goldmark-python is an extension for [goldmark](https://github.com/yuin/goldmark)
 
 You can use python to build svg image or output data in your markdown like [mume](https://github.com/shd101wyy/mume)
 
+It will auto replace `import matplotlib.pyplot as plt` to output svg in markdown.
+
 ## screenshot
 
 There are two demo(using `'` instead of &#8242; in the code block)

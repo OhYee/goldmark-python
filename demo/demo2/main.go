@@ -15,7 +15,7 @@ import (
 	"github.com/yuin/goldmark/parser"
 )
 
-var raw = "```python\nimport matplotlib.pyplot as plt\nimport matplotlib\nimport sys\n\nmatplotlib.use(\"svg\")\n\ny = [1, 2, 3, 4, 5]\nx = [5, 4, 3, 2, 1]\n\nplt.plot(x, y)\nplt.savefig(sys.stdout)\n```\n\n```python-output\nimport matplotlib.pyplot as plt\nimport matplotlib\nimport sys\n\nmatplotlib.use(\"svg\")\n\ny = [1, 2, 3, 4, 5]\nx = [5, 4, 3, 2, 1]\n\nplt.plot(x, y)\nplt.savefig(sys.stdout)\n```"
+var raw = "```python\nimport matplotlib.pyplot as plt\ny = [1, 2, 3, 4, 5]\nx = [5, 4, 3, 2, 1]\n\nplt.plot(x, y)\nplt.show()\n```\n\n```python-output\nimport matplotlib.pyplot as plt\ny = [1, 2, 3, 4, 5]\nx = [5, 4, 3, 2, 1]\n\nplt.plot(x, y)\nplt.show()\n```"
 
 func main() {
 	md := goldmark.New(
@@ -40,7 +40,7 @@ func main() {
 	}
 
 	_, file, _, _ := runtime.Caller(0)
-	if err := ioutil.WriteFile(path.Join(path.Dir(file), "output.html"), buf.Bytes(), 777); err != nil {
+	if err := ioutil.WriteFile(path.Join(path.Dir(file), "output.html"), buf.Bytes(), 0777); err != nil {
 		panic(err.Error())
 	}
 }

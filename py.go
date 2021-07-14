@@ -7,8 +7,10 @@ package python
 import (
 	"bytes"
 	"crypto/sha1"
+	"fmt"
 	"io"
 	"os/exec"
+	"regexp"
 
 	ext "github.com/OhYee/goldmark-fenced_codeblock_extension"
 	fp "github.com/OhYee/goutils/functional"
@@ -17,6 +19,8 @@ import (
 	"github.com/yuin/goldmark/ast"
 	"github.com/yuin/goldmark/util"
 )
+
+var reMatplotlib = regexp.MustCompile("(?m)^\\s*import matplotlib.pyplot as plt\\s*$")
 
 // Default Python extension when there is no other fencedCodeBlock goldmark render extensions
 var Default = NewPythonExtension(20, "python3", "python")
@@ -105,6 +109,8 @@ func runPython(input []byte, pythonPath string, args ...string) (output []byte, 
 		return
 	}
 
+	input = reMatplotlib.ReplaceAll(input, []byte("import matplotlib.pyplot as plt\nimport matplotlib\nimport os\nmatplotlib.use('svg')\nplt.show = lambda x: plt.savefig(sys.stdout)"))
+	fmt.Println(string(input))
 	_, err = stdin.Write(input)
 	if err != nil {
 		return
@@ -119,6 +125,7 @@ func runPython(input []byte, pythonPath string, args ...string) (output []byte, 
 	if err != nil {
 		return
 	}
+	fmt.Println(string(output))
 
 	return
 }
