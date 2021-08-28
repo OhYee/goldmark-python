@@ -109,9 +109,9 @@ func runPython(input []byte, pythonPath string, args ...string) (output []byte, 
 		return
 	}
 
-	input = reMatplotlib.ReplaceAll(input, []byte("import matplotlib.pyplot as plt\nimport matplotlib\nimport os\nmatplotlib.use('svg')\nplt.show = lambda x: plt.savefig(sys.stdout)"))
+	input = reMatplotlib.ReplaceAll(input, []byte("import matplotlib.pyplot as plt\nimport matplotlib\nimport sys\nmatplotlib.use('svg')\nplt.show = lambda *args, **kwargs: plt.savefig(sys.stdout)"))
 	fmt.Println(string(input))
-	_, err = stdin.Write(input)
+	_, err = stdin.Write(append(input, '\n'))
 	if err != nil {
 		return
 	}
